@@ -14,6 +14,13 @@ def execute_command(event=None):
     terminal_output.see(tk.END)
     command_entry.delete(0, tk.END)
 
+
+# Fonction pour exécuter une commande à partir du menu
+def execute_menu_command(event=None):
+    selected_command = menu_listbox.get(tk.ACTIVE)
+    command_entry.insert(tk.END, selected_command)
+    execute_command()
+
 # Configuration de la fenêtre principale
 root = tk.Tk()
 root.title("Mon Terminal")
@@ -44,5 +51,19 @@ command_entry.bind('<Return>', execute_command)  # Liaison de l'événement 'Ret
 # Bouton d'exécution de la commande
 execute_button = tk.Button(command_frame, text="Exécuter", command=execute_command, bg="#000000", fg="#ffffff", activebackground="#333333", activeforeground="#ffffff", font=(font_family, font_size))
 execute_button.pack(side=tk.RIGHT, padx=(5, 0))
+
+
+
+# Cadre pour le menu des commandes
+menu_frame = tk.Frame(root, bg="#000000")
+menu_frame.pack(side=tk.LEFT, fill=tk.Y)
+
+# Liste des commandes du menu
+commands = ["ls", "recherche", "commande3", "commande4"]  # Ajoutez vos commandes ici
+menu_listbox = tk.Listbox(menu_frame, bg="#000000", fg="#ffffff", selectbackground="#333333", selectforeground="#ffffff", font=(font_family, font_size))
+for command in commands:
+    menu_listbox.insert(tk.END, command)
+menu_listbox.pack(fill=tk.BOTH, expand=True)
+menu_listbox.bind('<Double-Button-1>', execute_menu_command)  # Liaison de l'événement 'Double-Button-1' à la fonction execute_menu_command
 
 root.mainloop()
